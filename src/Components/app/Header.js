@@ -21,7 +21,7 @@ function Header() {
 			onClick={() => {
 				window.location.href = "/Nav";
 			  }}
-            title="Nav →"
+            title="Nav"
             titleColor="var(--primary-color)"
             backgroundColor="#ecf7ff"
             titleFontWeight={300}
@@ -30,16 +30,16 @@ function Header() {
             onClick={() => {
 				window.location.href = "/Main";
 			  }}	
-            title="Main →"
+            title="Main"
             titleColor="var(--primary-color)"
             backgroundColor="#ecf7ff"
             titleFontWeight={300}
           />
           <Button
             onClick={() => {
-				window.location.href = "/Trip";
+				window.location.href = "/Triplist";
 			  }}	
-            title="Trip →"
+            title="Triplist"
             titleColor="var(--primary-color)"
             backgroundColor="#ecf7ff"
             titleFontWeight={300}

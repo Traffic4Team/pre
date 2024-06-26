@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import Button from "../common/Button/button"; 
+import Button from "../../common/Button/button"; 
 
 
 const Container = styled.div`

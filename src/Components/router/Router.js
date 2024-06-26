@@ -12,7 +12,7 @@ import Login from "../member/Login";
 import Logout from "../member/Logout";
 import Nav from "../app/Nav";
 import Main from "../app/Main";
-import Trip from "../app/trip";
+import Triplist from "../app/trip/triplist";
 
 function Router() {
   return (
@@ -32,7 +32,7 @@ function Router() {
         <Route path="/join" element={<Join />} />
         <Route path="/logout" element={<Logout />} />
 
-        <Route path="/trip" element={<Trip />} />
+        <Route path="/triplist" element={<Triplist />} />
       </Routes>
 
   );
