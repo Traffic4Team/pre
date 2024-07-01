@@ -1,4 +1,4 @@
-import Router from "../router/Router"
+import Router from "../router/Router";
 import { Link } from "react-router-dom";
 
 function Main() {
@@ -8,9 +8,9 @@ function Main() {
             <div className="container">
               {/* 게시판 */}
 						<li className="nav-item dropdown">
-              <div className="nav-link dropdown-toggle" id="navbarDropdown"
+              <Link className="nav-link dropdown-toggle" id="navbarDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">게시판</div>
+                aria-expanded="false" to="/bbslist">게시판</Link>
 
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <Link className="dropdown-item" to="/bbslist">글목록</Link>

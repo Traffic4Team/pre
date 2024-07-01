@@ -36,7 +36,7 @@ function BbsAnswer() {
 			content: content
 		}
 		
-		await axios.post(`http://localhost:3000/bbs/${parentSeq}/answer`, req, {headers: headers})
+		await axios.post(`/answer`, req, {headers: headers})
 		.then((resp) => {
 			console.log("[BbsAnswer.js] createBbsAnswer() success :D");
 			console.log(resp.data);

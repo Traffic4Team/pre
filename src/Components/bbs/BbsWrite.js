@@ -31,7 +31,7 @@ function BbsWrite() {
 			content: content
 		}
 
-		await axios.post("http://localhost:3000/bbs", req, {headers: headers})
+		await axios.post("/bbs", req, {headers: headers})
 		.then((resp) => {
 			console.log("[BbsWrite.js] createBbs() success :D");
 			console.log(resp.data);
