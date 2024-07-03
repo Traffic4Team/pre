@@ -13,6 +13,7 @@ import Logout from "../member/Logout";
 import Nav from "../app/Nav";
 import Main from "../app/Main";
 import Triplist from "../app/trip/triplist";
+import Trips from "../app/trips";
 
 function Router() {
   return (
@@ -33,6 +34,7 @@ function Router() {
         <Route path="/logout" element={<Logout />} />
 
         <Route path="/triplist" element={<Triplist />} />
+        <Route path="/trips" element={<Trips />} />
       </Routes>
 
   );

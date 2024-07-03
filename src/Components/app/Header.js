@@ -18,10 +18,10 @@ function Header() {
       <div className="container text-center">
         <BoxContainer>
           <Button
-			onClick={() => {
+			      onClick={() => {
 				window.location.href = "/Nav";
 			  }}
-            title="Nav"
+            title="Login"
             titleColor="var(--primary-color)"
             backgroundColor="#ecf7ff"
             titleFontWeight={300}
@@ -30,7 +30,7 @@ function Header() {
             onClick={() => {
 				window.location.href = "/Main";
 			  }}	
-            title="Main"
+            title="board"
             titleColor="var(--primary-color)"
             backgroundColor="#ecf7ff"
             titleFontWeight={300}
@@ -44,6 +44,15 @@ function Header() {
             backgroundColor="#ecf7ff"
             titleFontWeight={300}
           />
+          {/* <Button
+			      onClick={() => {
+				window.location.href = "/trip";
+			  }}
+            title="trip"
+            titleColor="var(--primary-color)"
+            backgroundColor="#ecf7ff"
+            titleFontWeight={300}
+          /> */}
         </BoxContainer>
       </div>
     </header>

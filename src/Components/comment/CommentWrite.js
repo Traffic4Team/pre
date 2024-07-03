@@ -27,7 +27,7 @@ function CommentWrite(props) {
 			bbsSeq: seq
 		}
 
-		await axios.post(`http://localhost:3000/comment`, req, { params: {"bbsSeq": seq}, headers: headers})
+		await axios.post(`/comment`, req, { params: {"bbsSeq": seq}, headers: headers})
 		.then((resp) => {
 			console.log("[CommentWrite.js] createComment() success :D");
 			console.log(resp.data);
