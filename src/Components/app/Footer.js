@@ -1,21 +1,11 @@
-import "../../css/footer.css"
+import React from 'react';
 
-function Footer() {
-	return (
-		<footer className="py-4 bg-dark text-light footer">
-          <div className="container text-center">
-            <ul className="nav justify-content-center mb-3">
-              <li className="nav-item">
-                <a className="nav-link text-light" href="/">Top</a>
-              </li>
-            </ul>
-
-            <p>
-              <small>Traffic</small>
-            </p>
-          </div>
-        </footer>
-	);
+const Footer = () => {
+  return (
+    <footer id="footer">
+      <p className="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+    </footer>
+  );
 }
 
 export default Footer;

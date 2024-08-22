@@ -1,0 +1,88 @@
+/* 전체 컨테이너 설정 */
+#container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden; /* 스크롤바를 숨깁니다. */
+}
+
+/* 이동 상자 설정 */
+#movebox {
+  flex: 0 0 auto;
+  padding: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column; /* 자식 요소들을 수직으로 배치 */
+  gap: 20px;
+  overflow-y: auto; /* 콘텐츠가 넘칠 경우 스크롤바 표시 */
+}
+
+/* 리스트 컨테이너 설정 */
+.list-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px; /* 리스트와 버튼 사이의 간격 */
+}
+
+/* 각 리스트 설정 */
+.list {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 300px;
+  overflow-y: auto;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* 리스트 항목들을 수직으로 배치 */
+}
+
+/* 리스트 항목 설정 */
+.list-item {
+  background-color: #e0f7fa; /* 밝은 청록색 */
+  margin: 8px 0; /* 위아래 여백 */
+  text-align: center;
+  font-size: 14px; /* 글자 크기 조정 */
+  cursor: move;
+  padding: 10px; /* 패딩 추가 */
+  border-radius: 5px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); /* 그림자 강조 */
+  transition: background-color 0.3s ease; /* 배경 색상 전환 효과 */
+}
+
+/* 리스트 항목 드래그 중 스타일 변화 */
+.list-item:active {
+  background-color: #b2ebf2; /* 드래그 중 배경 색상 변화 */
+}
+
+/* 지도 컨테이너 설정 */
+#map-container {
+  flex: 1;
+  position: relative;
+}
+
+/* 지도 설정 */
+#map {
+  height: 100%; /* #map-container의 전체 높이 */
+  width: 100%;  /* #map-container의 전체 너비 */
+  position: absolute;
+  left: 0;
+}
+
+/* 오류 및 로딩 메시지 설정 */
+p {
+  margin: 0;
+  font-size: 16px; /* 기본 폰트 크기 조정 */
+  color: #333; /* 텍스트 색상 설정 */
+}
+
+.custom-input {
+  border: 2px solid black;
+}
+
+#search select {
+  display: inline-block;
+  width: auto;
+  min-width: 100px; /* You can adjust this value based on your design */
+  padding: 0.5em; /* Optional: adds some padding for better visual appearance */
+  box-sizing: border-box; /* Ensures padding and border are included in the element's width */
+}

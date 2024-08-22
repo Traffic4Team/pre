@@ -2,17 +2,10 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app){
     app.use(
-        ["/user", "/user/join", "/bbs", "/comment"],
+        ["/user/register", "/travelplan/restaurant"],
       createProxyMiddleware( {
-        target: 'http://localhost:8081',
-        changeOrigin: true
+        target: 'http://ec2-43-203-192-225.ap-northeast-2.compute.amazonaws.com:8080',
+        changeOrigin: true,
       })
     )
-  //   app.use(
-  //     ["/request"],
-  //   createProxyMiddleware( {
-  //     target: 'http://api.kcisa.kr/openapi/API_CNV_063',
-  //     changeOrigin: true
-  //   })
-  // )
   };

@@ -7,13 +7,15 @@ import BbsWrite from "../bbs/BbsWrite";
 import BbsDetail from "../bbs/BbsDetail";
 import BbsUpdate from "../bbs/BbsUpdate";
 import BbsAnswer from "../bbs/BbsAnswer";
-import Join from "../member/Join";
+import Register from "../member/Register";
 import Login from "../member/Login";
 import Logout from "../member/Logout";
 import Nav from "../app/Nav";
 import Main from "../app/Main";
-import Triplist from "../app/trip/triplist";
-import Trips from "../app/trips";
+import Book from '../app/Book';
+import GoogleMaps from '../Api/GoogleMaps.tsx';
+import Restaurant from "../restaurant/Restaurant.js";
+import PlannerPage from "../planner/PlannerPage.js";
 
 function Router() {
   return (
@@ -30,11 +32,13 @@ function Router() {
         <Route path="/bbsanswer/:parentSeq" element={<BbsAnswer />} />
 
         <Route path="/login" element={<Login />} />
-        <Route path="/join" element={<Join />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
 
-        <Route path="/triplist" element={<Triplist />} />
-        <Route path="/trips" element={<Trips />} />
+        <Route path="/book" element={<Book />} />
+        <Route path="/googlemaps" element={<GoogleMaps />} />
+        <Route path="/restaurant" element={<Restaurant />} />
+        <Route path="/PlannerPage" element={<PlannerPage />} />
       </Routes>
 
   );

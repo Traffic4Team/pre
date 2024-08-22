@@ -1,60 +1,26 @@
-import React from "react";
-import styled from "styled-components";
-import Button from "../common/Button/button";
+import React from 'react';
+import '../router/Router';
 
-const BoxContainer = styled.div`
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
-
-function Header() {
+const Header = () => {
   return (
-    <header className="py-4">
-      <div className="container text-center">
-        <BoxContainer>
-          <Button
-			      onClick={() => {
-				window.location.href = "/Nav";
-			  }}
-            title="Login"
-            titleColor="var(--primary-color)"
-            backgroundColor="#ecf7ff"
-            titleFontWeight={300}
-          />
-          <Button
-            onClick={() => {
-				window.location.href = "/Main";
-			  }}	
-            title="board"
-            titleColor="var(--primary-color)"
-            backgroundColor="#ecf7ff"
-            titleFontWeight={300}
-          />
-          <Button
-            onClick={() => {
-				window.location.href = "/Triplist";
-			  }}	
-            title="Triplist"
-            titleColor="var(--primary-color)"
-            backgroundColor="#ecf7ff"
-            titleFontWeight={300}
-          />
-          {/* <Button
-			      onClick={() => {
-				window.location.href = "/trip";
-			  }}
-            title="trip"
-            titleColor="var(--primary-color)"
-            backgroundColor="#ecf7ff"
-            titleFontWeight={300}
-          /> */}
-        </BoxContainer>
+    <header id="header">
+      <div className="logo">
+        <span className="icon fa-gem"></span>
       </div>
+      <div className="content">
+        <div className="inner">
+          <h1>Traffic</h1>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/Login">Login</a></li>
+          <li><a href="/book">Book</a></li>
+          <li><a href="/googlemaps">googlemaps</a></li>
+          <li><a href="/PlannerPage">PlannerPage</a></li>
+          {/* Uncomment if needed: <li><a href="#elements">Elements</a></li> */}
+        </ul>
+      </nav>
     </header>
   );
 }
