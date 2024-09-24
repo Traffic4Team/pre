@@ -17,6 +17,29 @@
   overflow-y: auto; /* 콘텐츠가 넘칠 경우 스크롤바 표시 */
 }
 
+#movebox > *:not(#search) {
+  align-self: center; 
+}
+
+/* 스크롤바 기본 스타일 */
+#movebox::-webkit-scrollbar {
+  width: 12px; /* 스크롤바 너비 */
+}
+
+#movebox::-webkit-scrollbar-track {
+  background: #D3D3D3; /* 스크롤바 배경색 */
+  border-radius: 10px;
+}
+
+#movebox::-webkit-scrollbar-thumb {
+  background: #87CEEB; /* 스크롤바 슬라이더 색상 */
+  border-radius: 10px;
+}
+
+#movebox::-webkit-scrollbar-thumb:hover {
+  background: #0047AB; /* 스크롤바 슬라이더 호버 색상 */
+}
+
 /* 리스트 컨테이너 설정 */
 .list-container {
   display: flex;
@@ -79,10 +102,89 @@ p {
   border: 2px solid black;
 }
 
+
+/* 검색 영역 설정 */
+#search {
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+/* DateRangePicker 스타일 */
+.DateRangePicker {
+  margin-right: 10px; /* select와의 간격 조정 */
+}
+
+/* select 스타일 설정 */
 #search select {
   display: inline-block;
   width: auto;
   min-width: 100px; /* You can adjust this value based on your design */
   padding: 0.5em; /* Optional: adds some padding for better visual appearance */
   box-sizing: border-box; /* Ensures padding and border are included in the element's width */
+}
+/* 팝업 스타일 설정 */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+.popup-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* 더보기 버튼 스타일 */
+#more-results-button {
+  width: 30%;
+  text-align: center;
+  border: none;
+  padding: 10px 20px; /* 여백 조정 */
+  font-size: 14px; /* 글자 크기 */
+  cursor: pointer; /* 포인터 커서 */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* 부드러운 전환 효과 */
+  display: flex; /* Flexbox 사용 */
+  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  box-shadow: none; /* 그림자 제거 */
+}
+
+/* Planner 페이지 보기 버튼 스타일 */
+#view-planner-page-button {
+  width: 30%;
+  text-align: center;
+  border: none;
+  padding: 10px 20px; /* 여백 조정 */
+  font-size: 14px; /* 글자 크기 */
+  cursor: pointer; /* 포인터 커서 */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* 부드러운 전환 효과 */
+  display: flex; /* Flexbox 사용 */
+  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  box-shadow: none; /* 그림자 제거 */
 }

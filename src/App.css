@@ -1,7 +1,8 @@
 .App {
-  text-align: center;
+  position: relative; /* 자식 요소의 절대 위치를 위한 상대 위치 지정 */
+  min-height: 100vh; /* 전체 화면 높이 */
+  overflow: hidden; /* 자식 요소가 컨테이너를 넘치지 않도록 설정 */
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +37,20 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.main-content {
+  margin-left: 200px; /* Sidebar의 너비만큼 오른쪽으로 밀기 */
+  flex: 1;
+  background-color: #ffffff;
+  max-height: 100vh;
+  padding: 0px;
+}
+
+
+

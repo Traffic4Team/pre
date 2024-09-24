@@ -1,7 +1,7 @@
 import React from 'react';
 import './Itemcontainer.css';
 
-function Itemcontainer({ title, imageSrc, onClick, rating, address }) {
+function Itemcontainer({ title, image, onClick, rating, address }) {
 
 
     return (
@@ -10,7 +10,7 @@ function Itemcontainer({ title, imageSrc, onClick, rating, address }) {
                 <img
                     alt="img"
                     aria-hidden="true"
-                    src={imageSrc}
+                    src={image}
                 />
             </div>
             <div className="text-container">

@@ -14,8 +14,10 @@ import Nav from "../app/Nav";
 import Main from "../app/Main";
 import Book from '../app/Book';
 import GoogleMaps from '../Api/GoogleMaps.tsx';
-import Restaurant from "../restaurant/Restaurant.js";
 import PlannerPage from "../planner/PlannerPage.js";
+import DateRangePicker from "../DateRangePicker/DateRangePicker.js";
+import User from "../member/user";
+
 
 function Router() {
   return (
@@ -37,8 +39,9 @@ function Router() {
 
         <Route path="/book" element={<Book />} />
         <Route path="/googlemaps" element={<GoogleMaps />} />
-        <Route path="/restaurant" element={<Restaurant />} />
         <Route path="/PlannerPage" element={<PlannerPage />} />
+        <Route path="/DateRangePicker" element={<DateRangePicker />} />
+        <Route path="/user" element={<User />} />
       </Routes>
 
   );

@@ -1,8 +1,7 @@
 .container {
   width: 280px; /* px 단위로 수정 */
-  height: 60px; /* px 단위로 수정 */
+  height: 70px; /* px 단위로 수정 */
   border-radius: 0.375rem;
-  border: 2px solid rgba(0, 0, 0, 0.3);
   display: flex; /* 플렉스 박스 레이아웃을 사용합니다 */
   align-items: center; /* 아이템들을 수직 중앙에 정렬합니다 */
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import './Planner.css';
 
-function planner({ title, address, imageSrc, onClick  }) {
+function planner({ title, address, image, onClick  }) {
     return (
         <div className="container_Planner" onClick={onClick}>
             <div className="image-container_Planner">
                 <img
                         alt="img"
                         aria-hidden="true"
-                        src={imageSrc}
+                        src={image}
                     />
             </div>
             <div className="text-container_Planner">

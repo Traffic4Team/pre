@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './GoogleMaps.css';
 import Itemcontainer from './Itemcontainer';
+import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 function GoogleMaps() {
   const [googleMap, setGoogleMap] = useState(null);
@@ -15,13 +16,19 @@ function GoogleMaps() {
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [pagination, setPagination] = useState(null);
   const [selectedType, setSelectedType] = useState('lodging');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [daysCount, setDaysCount] = useState(0);
 
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const placeTypes = [
     { value: 'lodging', label: '호텔' },
-    { value: 'restaurant', label: '레스토랑' }
+    { value: 'restaurant', label: '레스토랑' },
+    { value: 'tourist_attraction', label: '관광 명소' }
   ];
 
   useEffect(() => {
@@ -55,6 +62,29 @@ function GoogleMaps() {
     };
   }, []);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const startDateParam = queryParams.get('start');
+    const endDateParam = queryParams.get('end');
+    const daysCountParam = queryParams.get('daysCount');
+
+    if (startDateParam && endDateParam) {
+      setStartDate(new Date(startDateParam));
+      setEndDate(new Date(endDateParam));
+      if (daysCountParam) {
+        setDaysCount(Number(daysCountParam));
+      } else {
+        const totalDays = Math.ceil((new Date(endDateParam) - new Date(startDateParam)) / (1000 * 60 * 60 * 24) + 1);
+        setDaysCount(totalDays);
+      }
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (!googleMap) return;
+    fetchPlaces(searchTerm);
+  }, [googleMap, searchTerm, selectedType]);
+
   const updateMarkers = (hotels) => {
     if (googleMap) {
       markers.forEach(marker => marker.setMap(null));
@@ -84,7 +114,7 @@ function GoogleMaps() {
     }
   };
 
-  const fetchPlaces = (searchTerm) => {
+  const fetchPlaces = useCallback((searchTerm) => {
     if (!googleMap) return;
 
     setLoading(true);
@@ -94,23 +124,12 @@ function GoogleMaps() {
 
     const request = {
       query: searchTerm,
-      type: [selectedType], 
+      type: [selectedType],
       fields: ['name', 'formatted_address', 'geometry', 'place_id', 'photos', 'types', 'price_level', 'international_phone_number', 'rating'],
       locationBias: new window.google.maps.Circle({
         center: mapCenter.toJSON(),
         radius: 5000,
       }),
-    };
-
-    const updateMapCenter = (hotels) => {
-      if (googleMap && hotels.length > 0) {
-        // Calculate average lat and lng
-        const avgLat = hotels.reduce((sum, hotel) => sum + hotel.lat, 0) / hotels.length;
-        const avgLng = hotels.reduce((sum, hotel) => sum + hotel.lng, 0) / hotels.length;
-  
-        // Update map center
-        googleMap.setCenter({ lat: avgLat, lng: avgLng });
-      }
     };
 
     service.textSearch(request, (results, status, pagination) => {
@@ -119,21 +138,27 @@ function GoogleMaps() {
           title: place.name,
           address: place.formatted_address,
           image: place.photos && place.photos[0] ? place.photos[0].getUrl() : null,
+          imageUrl: place.photos && place.photos[0] ? place.photos[0].getUrl() : null,
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
-          types: place.types,
+          phone_number: place.international_phone_number,
           rating: place.rating,
           url: place.url,
+          types: place.types,
         }));
-
-        console.log('Request:', request);
-        console.log('Status:', status);
-        console.log('Results:', results);
 
         setHotels(placeData);
         updateMarkers(placeData);
-        initializeLists(placeData);
-        updateMapCenter(placeData);
+
+        initializeList1(placeData);
+        console.log(placeData);
+        
+        if (placeData.length > 0) {
+          const avgLat = placeData.reduce((sum, place) => sum + place.lat, 0) / placeData.length;
+          const avgLng = placeData.reduce((sum, place) => sum + place.lng, 0) / placeData.length;
+          googleMap.setCenter({ lat: avgLat, lng: avgLng });
+          googleMap.setZoom(12);
+        }
 
         if (pagination && pagination.hasNextPage) {
           setPagination(() => pagination);
@@ -146,7 +171,7 @@ function GoogleMaps() {
       }
       setLoading(false);
     });
-  };
+  }, [googleMap, selectedType, updateMarkers]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -166,41 +191,87 @@ function GoogleMaps() {
     }
   };
 
-  const initializeLists = (data) => {
-    // If search triggered, reset list1 and retain list2
-    if (searchTriggered) {
-      const half = Math.ceil(data.length); 
+  const initializeList1 = (data) => {
+    if (data.length > 0) {
+      const totalDays = daysCount || data.length;
+      const half = Math.ceil(data.length / 2);
       setList1(data.slice(0, half));
-      setList2(prevList2 => prevList2); // retain list2
-    } else {
-      const half = Math.ceil(data.length); 
-      setList1(data.slice(0, half));
-      setList2(data.slice(half));
     }
   };
 
-  const handleItemClick = (item, targetList) => {
-    if (targetList === 'list1') {
-      setList1(prevList => prevList.filter(i => i !== item));
-      setList2(prevList => [...prevList, item]);
+  const handleItemClick = (item, listName) => {
+    if (selectedType === 'lodging') {
+      if (listName === 'list1') {
+        if (list2.length < daysCount - 1) {
+          setList1(prevList1 => prevList1.filter(i => i !== item));
+          setList2(prevList2 => [...prevList2, item]);
+        } else {
+          alert(`최대 ${daysCount - 1}개 항목만 추가할 수 있습니다.`);
+        }
+      } else if (listName === 'list2') {
+        setList2(prevList2 => prevList2.filter(i => i !== item));
+        setList1(prevList1 => [...prevList1, item]);
+      }
     } else {
-      setList2(prevList => prevList.filter(i => i !== item));
-      setList1(prevList => [...prevList, item]);
+      if (listName === 'list1') {
+        setList1(prevList1 => prevList1.filter(i => i !== item));
+        setList2(prevList2 => [...prevList2, item]);
+      } else if (listName === 'list2') {
+        setList2(prevList2 => prevList2.filter(i => i !== item));
+        setList1(prevList1 => [...prevList1, item]);
+      }
     }
   };
 
   const handleViewPlannerPage = () => {
-    navigate('/PlannerPage', { state: { hotels: list2 } }); // /planner 경로로 이동하며 list2 데이터를 전달합니다.
+    navigate('/PlannerPage', { state: { hotels: list2 } });
   };
 
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
   };
 
+  const handleApplyDateRange = () => {
+    if (startDate && endDate) {
+      const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24) + 1);
+      setDaysCount(totalDays);
+      const selectedHotels = hotels.slice(0, totalDays);
+      setList2(prevList2 => 
+        prevList2.filter(hotel => !selectedHotels.includes(hotel)).concat(selectedHotels)
+      );
+    }
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setSelectedHotel(null);
+  };
+
+  useEffect(() => {
+    if (location.state) {
+      const { startDate, endDate, daysCount } = location.state;
+      if (startDate && endDate) {
+        setStartDate(startDate);
+        setEndDate(endDate);
+        if (daysCount) {
+          setDaysCount(daysCount);
+        } else {
+          const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24) + 1);
+          setDaysCount(totalDays);
+        }
+      }
+    }
+  }, [location.state]);
+
   return (
     <div id="container">
       <div id="movebox">
         <div id="search">
+          <DateRangePicker onDateRangeSelect={({ startDate, endDate }) => {
+            setStartDate(startDate);
+            setEndDate(endDate);
+            handleApplyDateRange();
+          }} />
           <select value={selectedType} onChange={handleTypeChange}>
             {placeTypes.map(type => (
               <option key={type.value} value={type.value}>
@@ -213,7 +284,7 @@ function GoogleMaps() {
             id="search-input"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder={`${selectedType === 'lodging' ? '호텔' : '레스토랑'}을 검색하세요...`}
+            placeholder={`${selectedType === 'lodging' ? '호텔' : selectedType === 'tourist_attraction' ? '관광 명소' : '레스토랑'}을 검색하세요...`}
           />
           <button
             id="search-button"
@@ -228,24 +299,24 @@ function GoogleMaps() {
           <div className="list">
             {list1.map((item, index) => (
               <Itemcontainer
-                imageSrc={item.image}
+                image={item.image}
                 key={index}
                 title={item.title}
                 onClick={() => handleItemClick(item, 'list1')}
                 rating={item.rating}
-                address={item.address} 
+                address={item.address}
               />
             ))}
           </div>
           <div className="list">
             {list2.map((item, index) => (
               <Itemcontainer
-                imageSrc={item.image}
+                image={item.image}
                 key={index}
                 title={item.title}
                 onClick={() => handleItemClick(item, 'list2')}
                 rating={item.rating}
-                address={item.address}   
+                address={item.address}
               />
             ))}
           </div>
@@ -256,7 +327,7 @@ function GoogleMaps() {
             onClick={fetchMoreResults}
             disabled={loading}
           >
-            더 보기
+            + 더보기
           </button>
         )}
         <button

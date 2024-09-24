@@ -25,17 +25,19 @@
   }
 
   .image-container_Planner {
-    width: 40px; /* 적절한 너비로 조정 */
-    height: 40px; /* 적절한 높이로 조정 */
-    margin-left: 5px; /* 오른쪽 여백 */
-    position: relative; /* 상대 위치 */
-    overflow: hidden; /* 컨테이너 크기를 넘는 부분을 숨김 */
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
+    position: relative;
+    overflow: hidden; /* Ensure the image is clipped to the container size */
   }
+  
   .image-container_Planner img {
-    width: 100%; /* 컨테이너에 맞춰 이미지 너비를 100%로 설정 */
-    height: 100%; /* 컨테이너에 맞춰 이미지 높이를 100%로 설정 */
-    object-fit: cover; /* 이미지가 컨테이너에 맞춰 잘리도록 설정 */
+    width: 100%; /* Ensure the image fits the container width */
+    height: 100%; /* Ensure the image fits the container height */
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
   }
+  
   .title_Planner {
     font-size: 0.875rem; /* 기본 폰트 크기 설정 */
     font-weight: bold; /* 굵은 폰트 설정 */
